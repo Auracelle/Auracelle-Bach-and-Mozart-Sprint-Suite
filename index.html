@@ -1,0 +1,2797 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Auracelle Bach & Mozart — Sprint Suite (109 Sprints)</title>
+  <style>
+    /* ========== CSS Variables ========== */
+    :root {
+      --color-primary: #1a1a2e;
+      --color-primary-light: #2d2d44;
+      --color-accent: #7c3aed;
+      --color-accent-hover: #6d28d9;
+      --color-bg: #f8f9fa;
+      --color-surface: #ffffff;
+      --color-border: #e5e7eb;
+      --color-border-subtle: #f3f4f6;
+      --color-text: #111827;
+      --color-text-secondary: #6b7280;
+      --color-text-muted: #9ca3af;
+      --color-danger: #dc2626;
+      --color-success: #059669;
+      --color-bach: #7c3aed;
+      --color-mozart: #2563eb;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ========== Base Styles ========== */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ========== App Bar ========== */
+    .appbar {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(8px);
+    }
+
+    .appbar .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .brand p {
+      margin: 6px 0 0;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+
+    .brand strong {
+      color: var(--color-text);
+      font-weight: 600;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge.bach {
+      background: rgba(124, 58, 237, 0.1);
+      color: var(--color-bach);
+    }
+
+    .badge.mozart {
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--color-mozart);
+    }
+
+    /* ========== Tabs ========== */
+    .tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 4px;
+      background: var(--color-border-subtle);
+      border-radius: var(--radius-full);
+    }
+
+    .tabbtn {
+      padding: 9px 18px;
+      border: none;
+      border-radius: var(--radius-full);
+      background: transparent;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      transition: var(--transition);
+      letter-spacing: -0.01em;
+    }
+
+    .tabbtn:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: var(--color-text);
+    }
+
+    .tabbtn.active {
+      background: var(--color-surface);
+      color: var(--color-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ========== Content Structure ========== */
+    .content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .pane {
+      display: none;
+    }
+
+    .pane.active {
+      display: block;
+    }
+
+    .page-header {
+      padding: 32px 24px 24px;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* ========== Typography ========== */
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: -0.03em;
+    }
+
+    h3 {
+      margin: 0 0 16px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+
+    .muted {
+      color: var(--color-text-muted);
+    }
+
+    .mono {
+      font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+      font-size: 13px;
+    }
+
+    /* ========== Cards ========== */
+    .card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 16px;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ========== Layout Utilities ========== */
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .row > * {
+      flex: 1 1 auto;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .grid3 {
+        grid-template-columns: 1fr;
+      }
+      .grid2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .right {
+      text-align: right;
+    }
+
+    /* ========== Form Elements ========== */
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      background: var(--color-surface);
+      color: var(--color-text);
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    }
+
+    input[type="text"]:hover,
+    input[type="date"]:hover,
+    textarea:hover,
+    select:hover {
+      border-color: var(--color-text-muted);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    input[readonly] {
+      background: var(--color-border-subtle);
+      color: var(--color-text-muted);
+      cursor: not-allowed;
+    }
+
+    /* ========== Buttons ========== */
+    button {
+      padding: 11px 18px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text);
+      transition: var(--transition);
+      letter-spacing: -0.01em;
+      font-family: inherit;
+    }
+
+    button:hover {
+      background: var(--color-border-subtle);
+      border-color: var(--color-text-muted);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    button.primary {
+      background: var(--color-accent);
+      color: white;
+      border-color: var(--color-accent);
+    }
+
+    button.primary:hover {
+      background: var(--color-accent-hover);
+      border-color: var(--color-accent-hover);
+    }
+
+    button.danger {
+      border-color: var(--color-danger);
+      color: var(--color-danger);
+    }
+
+    button.danger:hover {
+      background: var(--color-danger);
+      color: white;
+    }
+
+    /* ========== Tables ========== */
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    th,
+    td {
+      padding: 14px 12px;
+      vertical-align: top;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    th {
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      background: var(--color-border-subtle);
+      position: sticky;
+      top: 86px;
+      z-index: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    th:first-child {
+      border-top-left-radius: var(--radius-md);
+    }
+
+    th:last-child {
+      border-top-right-radius: var(--radius-md);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--color-border-subtle);
+    }
+
+    tr.subrow td {
+      background: #fafbfc;
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    tr.subrow:hover td {
+      background: #fafbfc;
+    }
+
+    /* ========== Pills & Badges ========== */
+    .pill {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--color-border);
+      background: var(--color-border-subtle);
+      color: var(--color-text-secondary);
+      letter-spacing: -0.01em;
+    }
+
+    /* ========== Checklist ========== */
+    .checklist {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 8px 0;
+    }
+
+    .check {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      background: var(--color-surface);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .check:hover {
+      border-color: var(--color-accent);
+      background: var(--color-border-subtle);
+    }
+
+    .check input {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--color-accent);
+    }
+
+    .check label {
+      margin: 0;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    @media (max-width: 900px) {
+      .checklist {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ========== Subgrid for Sprint Details ========== */
+    .subgrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 16px 0;
+    }
+
+    .subgrid label {
+      display: block;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+
+    .subgrid textarea {
+      min-height: 110px;
+      width: 100%;
+    }
+
+    @media (max-width: 900px) {
+      .subgrid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ========== Details/Summary ========== */
+    details {
+      cursor: default;
+    }
+
+    details summary {
+      cursor: pointer;
+      font-weight: 700;
+      padding: 0;
+      color: var(--color-text);
+      user-select: none;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    details summary:hover {
+      color: var(--color-accent);
+    }
+
+    details[open] summary {
+      margin-bottom: 16px;
+    }
+
+    /* ========== Toast Notifications ========== */
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: var(--color-primary);
+      color: white;
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: var(--transition);
+      z-index: 2000;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========== Info Box ========== */
+    .info-box {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(37, 99, 235, 0.05));
+      border: 1px solid var(--color-accent);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .info-box h4 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      color: var(--color-accent);
+      font-weight: 700;
+    }
+
+    .info-box p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* ========== Responsive Adjustments ========== */
+    @media (max-width: 768px) {
+      .appbar .wrap {
+        padding: 16px 20px;
+      }
+
+      .brand h1 {
+        font-size: 17px;
+      }
+
+      .page-header {
+        padding: 24px 20px 20px;
+      }
+
+      .wrap {
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 21px;
+      }
+
+      .card {
+        padding: 16px;
+      }
+
+      th {
+        top: 120px;
+      }
+
+      button {
+        padding: 10px 14px;
+        font-size: 13px;
+      }
+    }
+
+    /* ========== Print Styles ========== */
+    @media print {
+      .appbar,
+      .tabs,
+      button {
+        display: none;
+      }
+
+      .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        page-break-inside: avoid;
+      }
+
+      body {
+        background: white;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="appbar">
+  <div class="wrap">
+    <div class="brand">
+      <h1>🎼 Auracelle Bach & Mozart — Sprint Suite</h1>
+      <p>
+        <span class="badge bach">Bach</span> Academic/Civil Society • 
+        <span class="badge mozart">Mozart</span> Diplomatic/Institutional • 
+        <strong>Weekly Sprint Cycle</strong> with 48-hour review loops
+      </p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Sprint Suite Tabs">
+      <button class="tabbtn active" id="tabBoard" role="tab" aria-selected="true" aria-controls="paneBoard">Board</button>
+      <button class="tabbtn" id="tabDaily" role="tab" aria-selected="false" aria-controls="paneDaily">Daily Log</button>
+      <button class="tabbtn" id="tabBacklog" role="tab" aria-selected="false" aria-controls="paneBacklog">Backlog</button>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <!-- ========== BOARD TAB ========== -->
+  <div class="pane active" id="paneBoard" role="tabpanel" aria-labelledby="tabBoard">
+    <div class="page-header">
+      <div class="wrap">
+        <div class="row" style="gap:16px">
+          <div style="flex: 2 1 auto;">
+            <h2>Sprint Board</h2>
+            <p class="small" style="margin:8px 0 0;">
+              Weekly sprint cycles for Bach (mathematical intelligence suite) and Mozart (diplomatic simulation platform). 
+              Each sprint runs Monday-Sunday with 48-hour review windows.
+            </p>
+          </div>
+          <div class="row" style="flex: 1 1 420px; justify-content:flex-end;">
+            <button id="board_btnExportMd">Export Markdown</button>
+            <button id="board_btnExportJson">Export JSON</button>
+            <button class="primary" id="board_btnSave">Save Board</button>
+          </div>
+        </div>
+        <p class="small muted" style="margin:16px 0 0;">
+          Principal Investigator: <strong style="color: var(--color-text-secondary);">Grace-Alice Evans</strong> • 
+          Framework: AGPO (Accelerated AI Governance Policy Optimization) + IAIG
+        </p>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="info-box">
+        <h4>📋 Weekly Sprint Structure</h4>
+        <p><strong>Monday:</strong> Sprint planning, goal setting • <strong>Tuesday-Thursday:</strong> Core development work • 
+        <strong>Friday:</strong> 48-hour review checkpoint • <strong>Saturday-Sunday:</strong> Integration, refinement, documentation • 
+        <strong>Monday:</strong> Sprint retrospective + new sprint kickoff</p>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div>
+            <label>Methodology</label>
+            <input id="board_method" type="text" value="Research-Adapted SCRUM (Weekly Cycles with 48hr Review)" />
+          </div>
+          <div>
+            <label>Last Updated</label>
+            <input id="board_lastUpdated" type="text" class="mono" readonly />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Project Configuration</h3>
+        <p class="small muted" style="margin:0 0 16px;">Define Bach and Mozart project phases. Sprint rows reference these configurations.</p>
+        <table aria-label="Projects table">
+          <thead>
+            <tr>
+              <th style="width:280px;">Project Name</th>
+              <th style="width:260px;">Default Process Phase</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="board_projectsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Sprint Timeline</h3>
+        <p class="small muted" style="margin:0 0 16px;">
+          Past sprints are marked <strong>Complete</strong>. Current sprint is <strong>Active</strong>. 
+          Future sprints are <strong>Planned</strong>. Click sprint numbers to expand Goal/Outcomes.
+        </p>
+        <table aria-label="Sprints table">
+          <thead>
+            <tr>
+              <th style="width:90px;">Sprint #</th>
+              <th style="width:220px;">Project</th>
+              <th style="width:200px;">Process Phase</th>
+              <th style="width:160px;">Week (Mon-Sun)</th>
+              <th style="width:120px;">Status</th>
+              <th style="width:160px;">Author</th>
+              <th style="width:92px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="board_sprintsBody"></tbody>
+        </table>
+
+        <div class="row" style="margin-top:16px; align-items:center;">
+          <button id="board_btnAddSprint">+ Add Sprint</button>
+          <button id="board_btnReset" class="danger">Reset to Default</button>
+          <span class="small muted">Weekly sprints auto-numbered • Click rows to expand details</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="grid2">
+          <div>
+            <label>Strategic Notes</label>
+            <textarea id="board_quickNotes" placeholder="Key strategic positioning, institutional engagement targets, conference deadlines..."></textarea>
+          </div>
+          <div>
+            <label>Technical Backlog</label>
+            <textarea id="board_backlog" placeholder="Feature requests, mathematical enhancements, API integrations, documentation needs..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== DAILY LOG TAB ========== -->
+  <div class="pane" id="paneDaily" role="tabpanel" aria-labelledby="tabDaily">
+    <div class="page-header">
+      <div class="wrap">
+        <div class="row" style="gap:16px">
+          <div style="flex: 2 1 auto;">
+            <h2>Daily Development Log</h2>
+            <p class="small" style="margin:8px 0 0;">
+              Track daily progress on Bach/Mozart. Capture decisions, deferred items, and integration work.
+            </p>
+          </div>
+          <div class="row" style="flex: 1 1 420px; justify-content:flex-end;">
+            <button id="daily_btnExportMd">Export Markdown</button>
+            <button id="daily_btnExportJson">Export JSON</button>
+            <button class="primary" id="daily_btnSaveEntry">Save Entry</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="card">
+        <div class="grid3">
+          <div>
+            <label>Date</label>
+            <input id="daily_date" type="date" />
+          </div>
+          <div>
+            <label>Sprint Week</label>
+            <select id="daily_sprint">
+              <option>Week 1</option>
+              <option>Week 2</option>
+              <option>Week 3</option>
+              <option>Week 4</option>
+              <option>Week 5</option>
+              <option>Week 6</option>
+              <option>Week 7</option>
+              <option>Week 8</option>
+              <option>Week 9</option>
+              <option>Week 10</option>
+              <option>Week 11</option>
+              <option>Week 12</option>
+            </select>
+          </div>
+          <div>
+            <label>Focus Area</label>
+            <select id="daily_focus">
+              <option>Mathematical Intelligence Suite</option>
+              <option>Cognitive Architecture</option>
+              <option>Trust Dynamics</option>
+              <option>Institutional Modeling</option>
+              <option>Policy Database Integration</option>
+              <option>API Development</option>
+              <option>Nash Equilibrium Solver</option>
+              <option>Bayesian Uncertainty</option>
+              <option>MARL Implementation</option>
+              <option>Strategic Positioning</option>
+              <option>Documentation & Papers</option>
+              <option>Stakeholder Engagement</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <label>✅ Components Worked On Today</label>
+        <div id="daily_checklist" class="checklist"></div>
+      </div>
+
+      <div class="card">
+        <div class="grid2">
+          <div>
+            <label>🧠 Key Decision / Integration</label>
+            <textarea id="daily_decision" placeholder="What was decided, integrated, or clarified today? Focus on architectural decisions and cross-component work."></textarea>
+          </div>
+          <div>
+            <label>🔁 Deferred / Parked</label>
+            <textarea id="daily_deferred" placeholder="What was intentionally deferred? Capture rationale for sequencing decisions."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="grid2">
+          <div>
+            <label>⚠️ Technical Risk / Blocker</label>
+            <textarea id="daily_risk" placeholder="API limitations, mathematical complexity, integration challenges, computational constraints..."></textarea>
+          </div>
+          <div>
+            <label>Status at end of day</label>
+            <select id="daily_status">
+              <option>Progress on schedule</option>
+              <option>Ahead of schedule</option>
+              <option>Behind schedule (see notes)</option>
+              <option>Blocked (see risk)</option>
+              <option>Pivoting approach</option>
+            </select>
+            <div style="height:10px"></div>
+            <label>Author</label>
+            <input id="daily_author" type="text" value="Grace-Alice Evans" />
+          </div>
+        </div>
+      </div>
+
+      <details class="card" open>
+        <summary>📚 Saved Entries</summary>
+        <table aria-label="Saved entries table">
+          <thead>
+            <tr>
+              <th style="width:120px;">Date</th>
+              <th style="width:90px;">Week</th>
+              <th style="width:180px;">Focus</th>
+              <th>Decision / Note</th>
+              <th style="width:130px;">Status</th>
+              <th style="width:90px;" class="right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="daily_entriesBody"></tbody>
+        </table>
+
+        <div class="row" style="margin-top:16px;">
+          <button id="daily_btnClear" class="danger">Delete All Entries</button>
+          <span class="small muted">Export for PhD documentation, grant reports, or conference submissions</span>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ========== BACKLOG TAB ========== -->
+  <div class="pane" id="paneBacklog" role="tabpanel" aria-labelledby="tabBacklog">
+    <div class="page-header">
+      <div class="wrap">
+        <div class="row" style="gap:16px">
+          <div style="flex: 2 1 auto;">
+            <h2>Backlog & Future Work</h2>
+            <p class="small" style="margin:8px 0 0;">
+              Parked sprints and future enhancement pipeline. Move completed or deferred sprints here for later review.
+            </p>
+          </div>
+          <div class="row" style="flex: 1 1 420px; justify-content:flex-end;">
+            <button id="backlog_btnExportMd">Export Markdown</button>
+            <button id="backlog_btnExportJson">Export JSON</button>
+            <button class="primary" id="backlog_btnSave">Save Backlog</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="card">
+        <h3>Parked Sprints</h3>
+        <table aria-label="Backlog sprints table">
+          <thead>
+            <tr>
+              <th style="width:90px;">Sprint #</th>
+              <th style="width:220px;">Project</th>
+              <th style="width:200px;">Process Phase</th>
+              <th style="width:160px;">Week</th>
+              <th style="width:120px;">Status</th>
+              <th style="width:160px;">Author</th>
+              <th style="width:92px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="backlog_sprintsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="grid2">
+          <div>
+            <label>Enhancement Pipeline</label>
+            <textarea id="backlog_notes" placeholder="Future mathematical enhancements, additional frameworks, new API integrations, expanded institutional modeling..."></textarea>
+          </div>
+          <div>
+            <label>Strategic Parking Notes</label>
+            <textarea id="backlog_rationale" placeholder="Why items are deferred: resource constraints, dependency sequencing, stakeholder timing, conference schedules..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Saved</div>
+
+<script>
+(() => {
+  // ========== TAB SWITCHING ==========
+  const tabBoard = document.getElementById("tabBoard");
+  const tabDaily = document.getElementById("tabDaily");
+  const tabBacklog = document.getElementById("tabBacklog");
+  const paneBoard = document.getElementById("paneBoard");
+  const paneDaily = document.getElementById("paneDaily");
+  const paneBacklog = document.getElementById("paneBacklog");
+
+  function setTab(which) {
+    const isBoard = which === "board";
+    const isDaily = which === "daily";
+    const isBacklog = which === "backlog";
+
+    tabBoard.classList.toggle("active", isBoard);
+    tabDaily.classList.toggle("active", isDaily);
+    tabBacklog.classList.toggle("active", isBacklog);
+
+    tabBoard.setAttribute("aria-selected", isBoard ? "true" : "false");
+    tabDaily.setAttribute("aria-selected", isDaily ? "true" : "false");
+    tabBacklog.setAttribute("aria-selected", isBacklog ? "true" : "false");
+
+    paneBoard.classList.toggle("active", isBoard);
+    paneDaily.classList.toggle("active", isDaily);
+    paneBacklog.classList.toggle("active", isBacklog);
+
+    window.scrollTo({ top: 0, behavior: "instant" });
+    localStorage.setItem("auracelle_bach_mozart_suite_active_tab", which);
+  }
+
+  tabBoard.addEventListener("click", () => setTab("board"));
+  tabDaily.addEventListener("click", () => setTab("daily"));
+  tabBacklog.addEventListener("click", () => setTab("backlog"));
+
+  const last = localStorage.getItem("auracelle_bach_mozart_suite_active_tab");
+  if (last === "daily") setTab("daily");
+  else if (last === "backlog") setTab("backlog");
+
+  window.addEventListener("keydown", (e) => {
+    if (!e.altKey) return;
+    if (e.key === "1") setTab("board");
+    if (e.key === "2") setTab("daily");
+    if (e.key === "3") setTab("backlog");
+  });
+})();
+</script>
+
+<script>
+(() => {
+  // ========== BOARD TAB ==========
+  const STORAGE_KEY = "auracelle_bach_mozart_board_v1";
+  const $ = id => document.getElementById(id);
+
+  const PROCESS_PHASES = [
+    "Research & Conceptualization",
+    "Mathematical Framework Development",
+    "Architecture Design",
+    "Implementation & Integration",
+    "Testing & Validation",
+    "Strategic Positioning",
+    "Documentation & Publication"
+  ];
+
+  const STATUS_OPTS = ["Complete", "Active", "Planned", "Blocked", "Deferred"];
+
+  const defaultData = {
+    meta: {
+      method: "Research-Adapted SCRUM (Weekly Cycles with 48hr Review)",
+      lastUpdatedISO: new Date().toISOString(),
+      quickNotes: "UN WSIS+20 review engagement\nNATO presentations preparation\nMassChallenge startup accelerator\nCambridge PhD application positioning",
+      backlog: "Enhanced convergence prediction algorithms\nExtended moral foundations integration\nAdditional institutional behavior models\nPrivacy International API expansion\nComparative policy analysis module\nReal-time simulation scaling"
+    },
+    projects: [
+      { 
+        name: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        defaultPhase: "Implementation & Integration", 
+        notes: "Academic/civil society focus. Core components: Bayesian uncertainty, convergence prediction, MARL, cognitive architecture, trust dynamics, institutional modeling." 
+      },
+      { 
+        name: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        defaultPhase: "Architecture Design", 
+        notes: "Diplomatic/institutional focus. Design validation sandbox for testing policy modifications with institutional stakeholders (UN, WEF, NATO, OECD)." 
+      }
+    ],
+
+    sprints: [
+      { 
+        num: 1, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Research & Conceptualization", 
+        dates: "Jan 15-21, 2024", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Establish foundational vision for AI governance simulation", 
+        outcomes: "Conceptualized Auracelle as multi-system platform with decision transparency principle"
+      },
+      { 
+        num: 2, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Research & Conceptualization", 
+        dates: "Jan 22-28, 2024", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Develop Evans AGPO framework", 
+        outcomes: "Created AGPO methodology for multi-stakeholder governance modeling"
+      },
+      { 
+        num: 3, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Research & Conceptualization", 
+        dates: "Jan 29-Feb 4, 2024", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Develop IAIG framework", 
+        outcomes: "Established IAIG framework for AI system behavior analysis"
+      },
+      { 
+        num: 4, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Mathematical Framework Development", 
+        dates: "Feb 5-11, 2024", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Design war gaming simulation framework", 
+        outcomes: "Built war gaming architecture for governance scenario testing"
+      },
+      { 
+        num: 5, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Mathematical Framework Development", 
+        dates: "Feb 12-18, 2024", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Game-theoretic foundations", 
+        outcomes: "Developed Nash equilibrium and coalition formation algorithms"
+      },
+      { 
+        num: 6, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Mathematical Framework Development", 
+        dates: "Feb 19-25, 2024", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Research institutional behavior patterns", 
+        outcomes: "Literature review on bounded rationality and cognitive biases"
+      },
+      { 
+        num: 7, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Architecture Design", 
+        dates: "Feb 26-Mar 3, 2024", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Define Bach architecture", 
+        outcomes: "Positioned Bach as academic/civil society mathematical intelligence suite"
+      },
+      { 
+        num: 8, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Architecture Design", 
+        dates: "Mar 4-10, 2024", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Design 9-component architecture", 
+        outcomes: "Architected 9 mathematical enhancements with integration pathways"
+      },
+      { 
+        num: 9, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Research & Conceptualization", 
+        dates: "Mar 11-17, 2024", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Research trust dynamics", 
+        outcomes: "Analyzed trust formation mechanisms in international governance"
+      },
+      { 
+        num: 10, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Research & Conceptualization", 
+        dates: "Mar 18-24, 2024", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Explore Moral Foundations Theory", 
+        outcomes: "Evaluated MFT for modeling cultural variation in AI governance"
+      },
+      { 
+        num: 11, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Strategic Positioning", 
+        dates: "Week 11, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 11 objectives", 
+        outcomes: "Completed Week 11 deliverables"
+      },
+      { 
+        num: 12, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 12, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 12 objectives", 
+        outcomes: "Completed Week 12 deliverables"
+      },
+      { 
+        num: 13, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 13, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 13 objectives", 
+        outcomes: "Completed Week 13 deliverables"
+      },
+      { 
+        num: 14, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 14, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 14 objectives", 
+        outcomes: "Completed Week 14 deliverables"
+      },
+      { 
+        num: 15, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 15, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 15 objectives", 
+        outcomes: "Completed Week 15 deliverables"
+      },
+      { 
+        num: 16, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 16, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 16 objectives", 
+        outcomes: "Completed Week 16 deliverables"
+      },
+      { 
+        num: 17, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 17, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 17 objectives", 
+        outcomes: "Completed Week 17 deliverables"
+      },
+      { 
+        num: 18, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 18, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 18 objectives", 
+        outcomes: "Completed Week 18 deliverables"
+      },
+      { 
+        num: 19, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Research & Conceptualization", 
+        dates: "Week 19, 2024", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Conceptualize Mozart platform", 
+        outcomes: "Defined Mozart for institutional stakeholders"
+      },
+      { 
+        num: 20, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 20, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 20 objectives", 
+        outcomes: "Completed Week 20 deliverables"
+      },
+      { 
+        num: 21, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 21, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 21 objectives", 
+        outcomes: "Completed Week 21 deliverables"
+      },
+      { 
+        num: 22, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Strategic Positioning", 
+        dates: "Week 22, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 22 objectives", 
+        outcomes: "Completed Week 22 deliverables"
+      },
+      { 
+        num: 23, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 23, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 23 objectives", 
+        outcomes: "Completed Week 23 deliverables"
+      },
+      { 
+        num: 24, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 24, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 24 objectives", 
+        outcomes: "Completed Week 24 deliverables"
+      },
+      { 
+        num: 25, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 25, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 25 objectives", 
+        outcomes: "Completed Week 25 deliverables"
+      },
+      { 
+        num: 26, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 26, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 26 objectives", 
+        outcomes: "Completed Week 26 deliverables"
+      },
+      { 
+        num: 27, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 27, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 27 objectives", 
+        outcomes: "Completed Week 27 deliverables"
+      },
+      { 
+        num: 28, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 28, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 28 objectives", 
+        outcomes: "Completed Week 28 deliverables"
+      },
+      { 
+        num: 29, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 29, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 29 objectives", 
+        outcomes: "Completed Week 29 deliverables"
+      },
+      { 
+        num: 30, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 30, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 30 objectives", 
+        outcomes: "Completed Week 30 deliverables"
+      },
+      { 
+        num: 31, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 31, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 31 objectives", 
+        outcomes: "Completed Week 31 deliverables"
+      },
+      { 
+        num: 32, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 32, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 32 objectives", 
+        outcomes: "Completed Week 32 deliverables"
+      },
+      { 
+        num: 33, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Strategic Positioning", 
+        dates: "Week 33, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 33 objectives", 
+        outcomes: "Completed Week 33 deliverables"
+      },
+      { 
+        num: 34, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 34, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 34 objectives", 
+        outcomes: "Completed Week 34 deliverables"
+      },
+      { 
+        num: 35, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 35, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 35 objectives", 
+        outcomes: "Completed Week 35 deliverables"
+      },
+      { 
+        num: 36, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 36, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 36 objectives", 
+        outcomes: "Completed Week 36 deliverables"
+      },
+      { 
+        num: 37, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 37, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 37 objectives", 
+        outcomes: "Completed Week 37 deliverables"
+      },
+      { 
+        num: 38, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Architecture Design", 
+        dates: "Week 38, 2024", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Mozart architecture work", 
+        outcomes: "Mozart development - Week 38"
+      },
+      { 
+        num: 39, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 39, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 39 objectives", 
+        outcomes: "Completed Week 39 deliverables"
+      },
+      { 
+        num: 40, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 40, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 40 objectives", 
+        outcomes: "Completed Week 40 deliverables"
+      },
+      { 
+        num: 41, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 41, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 41 objectives", 
+        outcomes: "Completed Week 41 deliverables"
+      },
+      { 
+        num: 42, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 42, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 42 objectives", 
+        outcomes: "Completed Week 42 deliverables"
+      },
+      { 
+        num: 43, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 43, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 43 objectives", 
+        outcomes: "Completed Week 43 deliverables"
+      },
+      { 
+        num: 44, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Strategic Positioning", 
+        dates: "Week 44, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 44 objectives", 
+        outcomes: "Completed Week 44 deliverables"
+      },
+      { 
+        num: 45, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 45, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 45 objectives", 
+        outcomes: "Completed Week 45 deliverables"
+      },
+      { 
+        num: 46, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 46, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 46 objectives", 
+        outcomes: "Completed Week 46 deliverables"
+      },
+      { 
+        num: 47, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 47, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 47 objectives", 
+        outcomes: "Completed Week 47 deliverables"
+      },
+      { 
+        num: 48, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Architecture Design", 
+        dates: "Week 48, 2024", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Mozart architecture work", 
+        outcomes: "Mozart development - Week 48"
+      },
+      { 
+        num: 49, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 49, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 49 objectives", 
+        outcomes: "Completed Week 49 deliverables"
+      },
+      { 
+        num: 50, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 50, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 50 objectives", 
+        outcomes: "Completed Week 50 deliverables"
+      },
+      { 
+        num: 51, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 51, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 51 objectives", 
+        outcomes: "Completed Week 51 deliverables"
+      },
+      { 
+        num: 52, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 52, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 52 objectives", 
+        outcomes: "Completed Week 52 deliverables"
+      },
+      { 
+        num: 53, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 53, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 53 objectives", 
+        outcomes: "Completed Week 53 deliverables"
+      },
+      { 
+        num: 54, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 54, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 54 objectives", 
+        outcomes: "Completed Week 54 deliverables"
+      },
+      { 
+        num: 55, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Strategic Positioning", 
+        dates: "Week 55, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 55 objectives", 
+        outcomes: "Completed Week 55 deliverables"
+      },
+      { 
+        num: 56, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 56, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Mozart Week 56", 
+        outcomes: "Mozart deliverables Week 56"
+      },
+      { 
+        num: 57, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 57, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 57 objectives", 
+        outcomes: "Completed Week 57 deliverables"
+      },
+      { 
+        num: 58, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 58, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 58 objectives", 
+        outcomes: "Completed Week 58 deliverables"
+      },
+      { 
+        num: 59, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 59, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 59 objectives", 
+        outcomes: "Completed Week 59 deliverables"
+      },
+      { 
+        num: 60, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 60, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 60 objectives", 
+        outcomes: "Completed Week 60 deliverables"
+      },
+      { 
+        num: 61, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 61, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 61 objectives", 
+        outcomes: "Completed Week 61 deliverables"
+      },
+      { 
+        num: 62, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 62, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 62 objectives", 
+        outcomes: "Completed Week 62 deliverables"
+      },
+      { 
+        num: 63, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 63, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Mozart Week 63", 
+        outcomes: "Mozart deliverables Week 63"
+      },
+      { 
+        num: 64, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 64, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 64 objectives", 
+        outcomes: "Completed Week 64 deliverables"
+      },
+      { 
+        num: 65, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 65, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 65 objectives", 
+        outcomes: "Completed Week 65 deliverables"
+      },
+      { 
+        num: 66, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Strategic Positioning", 
+        dates: "Week 66, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 66 objectives", 
+        outcomes: "Completed Week 66 deliverables"
+      },
+      { 
+        num: 67, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 67, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 67 objectives", 
+        outcomes: "Completed Week 67 deliverables"
+      },
+      { 
+        num: 68, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 68, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 68 objectives", 
+        outcomes: "Completed Week 68 deliverables"
+      },
+      { 
+        num: 69, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 69, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 69 objectives", 
+        outcomes: "Completed Week 69 deliverables"
+      },
+      { 
+        num: 70, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 70, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Mozart Week 70", 
+        outcomes: "Mozart deliverables Week 70"
+      },
+      { 
+        num: 71, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 71, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 71 objectives", 
+        outcomes: "Completed Week 71 deliverables"
+      },
+      { 
+        num: 72, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 72, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 72 objectives", 
+        outcomes: "Completed Week 72 deliverables"
+      },
+      { 
+        num: 73, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 73, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 73 objectives", 
+        outcomes: "Completed Week 73 deliverables"
+      },
+      { 
+        num: 74, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 74, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 74 objectives", 
+        outcomes: "Completed Week 74 deliverables"
+      },
+      { 
+        num: 75, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 75, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 75 objectives", 
+        outcomes: "Completed Week 75 deliverables"
+      },
+      { 
+        num: 76, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 76, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 76 objectives", 
+        outcomes: "Completed Week 76 deliverables"
+      },
+      { 
+        num: 77, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 77, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Mozart Week 77", 
+        outcomes: "Mozart deliverables Week 77"
+      },
+      { 
+        num: 78, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 78, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 78 objectives", 
+        outcomes: "Completed Week 78 deliverables"
+      },
+      { 
+        num: 79, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 79, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 79 objectives", 
+        outcomes: "Completed Week 79 deliverables"
+      },
+      { 
+        num: 80, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 80, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 80 objectives", 
+        outcomes: "Completed Week 80 deliverables"
+      },
+      { 
+        num: 81, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 81, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 81 objectives", 
+        outcomes: "Completed Week 81 deliverables"
+      },
+      { 
+        num: 82, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 82, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 82 objectives", 
+        outcomes: "Completed Week 82 deliverables"
+      },
+      { 
+        num: 83, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 83, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 83 objectives", 
+        outcomes: "Completed Week 83 deliverables"
+      },
+      { 
+        num: 84, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 84, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Mozart Week 84", 
+        outcomes: "Mozart deliverables Week 84"
+      },
+      { 
+        num: 85, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 85, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 85 objectives", 
+        outcomes: "Completed Week 85 deliverables"
+      },
+      { 
+        num: 86, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 86, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 86 objectives", 
+        outcomes: "Completed Week 86 deliverables"
+      },
+      { 
+        num: 87, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 87, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 87 objectives", 
+        outcomes: "Completed Week 87 deliverables"
+      },
+      { 
+        num: 88, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Strategic Positioning", 
+        dates: "Week 88, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 88 objectives", 
+        outcomes: "Completed Week 88 deliverables"
+      },
+      { 
+        num: 89, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 89, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 89 objectives", 
+        outcomes: "Completed Week 89 deliverables"
+      },
+      { 
+        num: 90, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 90, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 90 objectives", 
+        outcomes: "Completed Week 90 deliverables"
+      },
+      { 
+        num: 91, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 91, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Mozart Week 91", 
+        outcomes: "Mozart deliverables Week 91"
+      },
+      { 
+        num: 92, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 92, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 92 objectives", 
+        outcomes: "Completed Week 92 deliverables"
+      },
+      { 
+        num: 93, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 93, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 93 objectives", 
+        outcomes: "Completed Week 93 deliverables"
+      },
+      { 
+        num: 94, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 94, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 94 objectives", 
+        outcomes: "Completed Week 94 deliverables"
+      },
+      { 
+        num: 95, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 95, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 95 objectives", 
+        outcomes: "Completed Week 95 deliverables"
+      },
+      { 
+        num: 96, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 96, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 96 objectives", 
+        outcomes: "Completed Week 96 deliverables"
+      },
+      { 
+        num: 97, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 97, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 97 objectives", 
+        outcomes: "Completed Week 97 deliverables"
+      },
+      { 
+        num: 98, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 98, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Mozart Week 98", 
+        outcomes: "Mozart deliverables Week 98"
+      },
+      { 
+        num: 99, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Strategic Positioning", 
+        dates: "Week 99, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 99 objectives", 
+        outcomes: "Completed Week 99 deliverables"
+      },
+      { 
+        num: 100, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 100, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Week 100 objectives", 
+        outcomes: "Completed Week 100 deliverables"
+      },
+      { 
+        num: 101, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Strategic Positioning", 
+        dates: "Dec 15-21, 2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "2026 strategic planning", 
+        outcomes: "Developed 2026 roadmap"
+      },
+      { 
+        num: 102, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Documentation & Publication", 
+        dates: "Dec 22-28, 2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Year-end reporting", 
+        outcomes: "Prepared stakeholder reports"
+      },
+      { 
+        num: 103, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Research & Conceptualization", 
+        dates: "Dec 29-Jan 4, 2026", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Next-generation research", 
+        outcomes: "Researched cutting-edge techniques"
+      },
+      { 
+        num: 104, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Jan 5-11, 2026", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "2026 enhancement cycle", 
+        outcomes: "Enhanced validation tools"
+      },
+      { 
+        num: 105, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Week 105, 2024-2025", 
+        status: "Complete", 
+        author: "Grace-Alice Evans", 
+        goal: "Mozart Week 105", 
+        outcomes: "Mozart deliverables Week 105"
+      },
+      { 
+        num: 106, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Jan 19-25, 2026", 
+        status: "Planned", 
+        author: "Grace-Alice Evans", 
+        goal: "Enhanced collaboration features", 
+        outcomes: ""
+      },
+      { 
+        num: 107, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Testing & Validation", 
+        dates: "Jan 26-Feb 1, 2026", 
+        status: "Planned", 
+        author: "Grace-Alice Evans", 
+        goal: "Q1 2026 validation study", 
+        outcomes: ""
+      },
+      { 
+        num: 108, 
+        project: "Auracelle Bach (Mathematical Intelligence Suite)", 
+        processPhase: "Implementation & Integration", 
+        dates: "Feb 2-8, 2026", 
+        status: "Planned", 
+        author: "Grace-Alice Evans", 
+        goal: "3D Visualization & Interactive Design Development", 
+        outcomes: "Implement 3D governance space visualization using Three.js, create interactive stakeholder network graphs with force-directed layouts, develop real-time policy impact visualization in 3D coordinate systems, integrate spatial representations of multi-actor dynamics and coalition formations"
+      },
+      { 
+        num: 109, 
+        project: "Auracelle Mozart (Diplomatic Simulation Platform)", 
+        processPhase: "Architecture Design", 
+        dates: "Feb 9-15, 2026", 
+        status: "Planned", 
+        author: "Grace-Alice Evans", 
+        goal: "Institutional Behavior Modeling Enhancement", 
+        outcomes: "Expand institutional decision-making models with bounded rationality frameworks, implement cognitive bias integration for organizational actors, develop path dependency mechanisms for institutional evolution, create inter-institutional coordination dynamics with trust formation models, integrate bureaucratic inertia and reform resistance patterns"
+      }
+    ],
+
+    backlogSprints: [],
+    backlogNotes: "",
+    backlogRationale: ""
+  };
+
+  function showToast(msg) {
+    const t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 1400);
+  }
+
+  function loadData() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return structuredClone(defaultData);
+      const parsed = JSON.parse(raw);
+      if (!parsed || !parsed.projects || !parsed.sprints) return structuredClone(defaultData);
+      if (!Array.isArray(parsed.backlogSprints)) parsed.backlogSprints = [];
+      if (typeof parsed.backlogNotes !== "string") parsed.backlogNotes = "";
+      if (typeof parsed.backlogRationale !== "string") parsed.backlogRationale = "";
+      return parsed;
+    } catch (e) {
+      return structuredClone(defaultData);
+    }
+  }
+
+  function saveData(data) {
+    data.meta.lastUpdatedISO = new Date().toISOString();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data, null, 2));
+    showToast("Saved ✅");
+  }
+
+  function makeSelect(options, value) {
+    const s = document.createElement("select");
+    options.forEach(o => {
+      const opt = document.createElement("option");
+      opt.value = o;
+      opt.textContent = o;
+      if (o === value) opt.selected = true;
+      s.appendChild(opt);
+    });
+    return s;
+  }
+
+  let data = loadData();
+
+  function render() {
+    $("board_method").value = data.meta.method || "";
+    $("board_quickNotes").value = data.meta.quickNotes || "";
+    $("board_backlog").value = (data.backlogNotes && data.backlogNotes.trim()) ? data.backlogNotes : (data.meta.backlog || "");
+    $("board_lastUpdated").value = data.meta.lastUpdatedISO ? new Date(data.meta.lastUpdatedISO).toLocaleString() : "";
+
+    // Projects
+    const pb = $("board_projectsBody");
+    pb.innerHTML = "";
+    data.projects.forEach((p) => {
+      const tr = document.createElement("tr");
+
+      const tdName = document.createElement("td");
+      const nameIn = document.createElement("input");
+      nameIn.type = "text";
+      nameIn.value = p.name || "";
+      tdName.appendChild(nameIn);
+
+      const tdPhase = document.createElement("td");
+      const phaseSel = makeSelect(PROCESS_PHASES, p.defaultPhase || PROCESS_PHASES[0]);
+      tdPhase.appendChild(phaseSel);
+
+      const tdNotes = document.createElement("td");
+      const notesIn = document.createElement("input");
+      notesIn.type = "text";
+      notesIn.value = p.notes || "";
+      tdNotes.appendChild(notesIn);
+
+      tr.appendChild(tdName);
+      tr.appendChild(tdPhase);
+      tr.appendChild(tdNotes);
+      pb.appendChild(tr);
+
+      nameIn.addEventListener("input", (e) => { p.name = e.target.value; });
+      phaseSel.addEventListener("change", (e) => { p.defaultPhase = e.target.value; });
+      notesIn.addEventListener("input", (e) => { p.notes = e.target.value; });
+    });
+
+    // Sprints
+    const sb = $("board_sprintsBody");
+    sb.innerHTML = "";
+    const projectNames = data.projects.map(p => p.name).filter(Boolean);
+
+    data.sprints.forEach((sp) => {
+      const tr = document.createElement("tr");
+
+      const tdNum = document.createElement("td");
+      tdNum.textContent = `Week ${sp.num}`;
+      tdNum.style.fontWeight = "700";
+      tr.appendChild(tdNum);
+
+      const tdProj = document.createElement("td");
+      const projSel = makeSelect(projectNames.length ? projectNames : ["Auracelle Bach (Mathematical Intelligence Suite)"], sp.project || projectNames[0]);
+      tdProj.appendChild(projSel);
+      tr.appendChild(tdProj);
+
+      const tdProc = document.createElement("td");
+      const procSel = makeSelect(PROCESS_PHASES, sp.processPhase || PROCESS_PHASES[0]);
+      tdProc.appendChild(procSel);
+      tr.appendChild(tdProc);
+
+      const tdDates = document.createElement("td");
+      const datesIn = document.createElement("input");
+      datesIn.type = "text";
+      datesIn.value = sp.dates || "";
+      tdDates.appendChild(datesIn);
+      tr.appendChild(tdDates);
+
+      const tdStatus = document.createElement("td");
+      const statusSel = makeSelect(STATUS_OPTS, sp.status || STATUS_OPTS[2]);
+      tdStatus.appendChild(statusSel);
+      tr.appendChild(tdStatus);
+
+      const tdAuthor = document.createElement("td");
+      const authorIn = document.createElement("input");
+      authorIn.type = "text";
+      authorIn.value = sp.author || "";
+      tdAuthor.appendChild(authorIn);
+      tr.appendChild(tdAuthor);
+
+      const tdActions = document.createElement("td");
+      const btnBacklog = document.createElement("button");
+      btnBacklog.textContent = "Backlog";
+      btnBacklog.style.padding = "8px 10px";
+      btnBacklog.addEventListener("click", () => {
+        if (!confirm("Move this sprint to Backlog tab? You can restore it later.")) return;
+        data.backlogSprints.push(structuredClone(sp));
+        data.sprints = data.sprints.filter(x => x !== sp);
+        render();
+        renderBacklog();
+        showToast("Moved to Backlog");
+      });
+      tdActions.appendChild(btnBacklog);
+      tr.appendChild(tdActions);
+
+      // Details row: Sprint Goal + Key Outcomes
+      const trDetails = document.createElement("tr");
+      trDetails.className = "subrow";
+      const tdDetails = document.createElement("td");
+      tdDetails.colSpan = 7;
+      const wrap = document.createElement("div");
+      wrap.className = "subgrid";
+
+      const left = document.createElement("div");
+      const labG = document.createElement("label");
+      labG.textContent = "Sprint Goal";
+      const goalTa = document.createElement("textarea");
+      goalTa.value = sp.goal || "";
+      left.appendChild(labG);
+      left.appendChild(goalTa);
+
+      const right = document.createElement("div");
+      const labO = document.createElement("label");
+      labO.textContent = "Key Outcomes";
+      const outTa = document.createElement("textarea");
+      outTa.value = sp.outcomes || "";
+      right.appendChild(labO);
+      right.appendChild(outTa);
+
+      wrap.appendChild(left);
+      wrap.appendChild(right);
+      tdDetails.appendChild(wrap);
+      trDetails.appendChild(tdDetails);
+
+      // Wire updates
+      projSel.addEventListener("change", (e) => { sp.project = e.target.value; });
+      procSel.addEventListener("change", (e) => { sp.processPhase = e.target.value; });
+      datesIn.addEventListener("input", (e) => { sp.dates = e.target.value; });
+      statusSel.addEventListener("change", (e) => { sp.status = e.target.value; });
+      authorIn.addEventListener("input", (e) => { sp.author = e.target.value; });
+      goalTa.addEventListener("input", (e) => { sp.goal = e.target.value; });
+      outTa.addEventListener("input", (e) => { sp.outcomes = e.target.value; });
+
+      sb.appendChild(tr);
+      sb.appendChild(trDetails);
+    });
+  }
+
+  function renderBacklog() {
+    const bb = $("backlog_sprintsBody");
+    bb.innerHTML = "";
+    const projectNames = data.projects.map(p => p.name).filter(Boolean);
+
+    data.backlogSprints.forEach((sp) => {
+      const tr = document.createElement("tr");
+
+      const tdNum = document.createElement("td");
+      tdNum.textContent = `Week ${sp.num}`;
+      tdNum.style.fontWeight = "700";
+      tr.appendChild(tdNum);
+
+      const tdProj = document.createElement("td");
+      const projSel = makeSelect(projectNames.length ? projectNames : ["Auracelle Bach (Mathematical Intelligence Suite)"], sp.project || projectNames[0]);
+      tdProj.appendChild(projSel);
+      tr.appendChild(tdProj);
+
+      const tdProc = document.createElement("td");
+      const procSel = makeSelect(PROCESS_PHASES, sp.processPhase || PROCESS_PHASES[0]);
+      tdProc.appendChild(procSel);
+      tr.appendChild(tdProc);
+
+      const tdDates = document.createElement("td");
+      const datesIn = document.createElement("input");
+      datesIn.type = "text";
+      datesIn.value = sp.dates || "";
+      tdDates.appendChild(datesIn);
+      tr.appendChild(tdDates);
+
+      const tdStatus = document.createElement("td");
+      const statusSel = makeSelect(STATUS_OPTS, sp.status || STATUS_OPTS[2]);
+      tdStatus.appendChild(statusSel);
+      tr.appendChild(tdStatus);
+
+      const tdAuthor = document.createElement("td");
+      const authorIn = document.createElement("input");
+      authorIn.type = "text";
+      authorIn.value = sp.author || "";
+      tdAuthor.appendChild(authorIn);
+      tr.appendChild(tdAuthor);
+
+      const tdActions = document.createElement("td");
+      const btnRestore = document.createElement("button");
+      btnRestore.textContent = "Restore";
+      btnRestore.style.padding = "8px 10px";
+      btnRestore.addEventListener("click", () => {
+        if (!confirm("Restore this sprint to the Board?")) return;
+        data.sprints.push(structuredClone(sp));
+        data.sprints.sort((a, b) => a.num - b.num);
+        data.backlogSprints = data.backlogSprints.filter(x => x !== sp);
+        render();
+        renderBacklog();
+        showToast("Restored to Board");
+      });
+      tdActions.appendChild(btnRestore);
+      tr.appendChild(tdActions);
+
+      // Details row
+      const trDetails = document.createElement("tr");
+      trDetails.className = "subrow";
+      const tdDetails = document.createElement("td");
+      tdDetails.colSpan = 7;
+      const wrap = document.createElement("div");
+      wrap.className = "subgrid";
+
+      const left = document.createElement("div");
+      const labG = document.createElement("label");
+      labG.textContent = "Sprint Goal";
+      const goalTa = document.createElement("textarea");
+      goalTa.value = sp.goal || "";
+      left.appendChild(labG);
+      left.appendChild(goalTa);
+
+      const right = document.createElement("div");
+      const labO = document.createElement("label");
+      labO.textContent = "Key Outcomes";
+      const outTa = document.createElement("textarea");
+      outTa.value = sp.outcomes || "";
+      right.appendChild(labO);
+      right.appendChild(outTa);
+
+      wrap.appendChild(left);
+      wrap.appendChild(right);
+      tdDetails.appendChild(wrap);
+      trDetails.appendChild(tdDetails);
+
+      projSel.addEventListener("change", (e) => { sp.project = e.target.value; });
+      procSel.addEventListener("change", (e) => { sp.processPhase = e.target.value; });
+      datesIn.addEventListener("input", (e) => { sp.dates = e.target.value; });
+      statusSel.addEventListener("change", (e) => { sp.status = e.target.value; });
+      authorIn.addEventListener("input", (e) => { sp.author = e.target.value; });
+      goalTa.addEventListener("input", (e) => { sp.goal = e.target.value; });
+      outTa.addEventListener("input", (e) => { sp.outcomes = e.target.value; });
+
+      bb.appendChild(tr);
+      bb.appendChild(trDetails);
+    });
+
+    // Backlog notes
+    $("backlog_notes").value = data.backlogNotes || "";
+    $("backlog_rationale").value = data.backlogRationale || "";
+  }
+
+  function toMarkdown() {
+    const lines = [];
+    lines.push("# Auracelle Bach & Mozart — Sprint Board");
+    lines.push(`Exported: ${new Date().toLocaleString()}`);
+    lines.push("");
+    lines.push(`**Method:** ${data.meta.method}`);
+    lines.push("");
+    lines.push("## Projects");
+    data.projects.forEach(p => {
+      lines.push(`- **${p.name}** (${p.defaultPhase}): ${p.notes || "—"}`);
+    });
+    lines.push("");
+    lines.push("## Sprints");
+    data.sprints.forEach(s => {
+      lines.push(`### Week ${s.num} — ${s.project}`);
+      lines.push(`- Phase: ${s.processPhase}`);
+      lines.push(`- Dates: ${s.dates}`);
+      lines.push(`- Status: ${s.status}`);
+      lines.push(`- Author: ${s.author}`);
+      if (s.goal) lines.push(`- Goal: ${s.goal}`);
+      if (s.outcomes) lines.push(`- Outcomes: ${s.outcomes}`);
+      lines.push("");
+    });
+    if (data.meta.quickNotes) {
+      lines.push("## Strategic Notes");
+      lines.push(data.meta.quickNotes);
+      lines.push("");
+    }
+    if (data.backlogNotes || data.meta.backlog) {
+      lines.push("## Technical Backlog");
+      lines.push(data.backlogNotes || data.meta.backlog);
+    }
+    return lines.join("\n");
+  }
+
+  function backlogToMarkdown() {
+    const lines = [];
+    lines.push("# Auracelle Bach & Mozart — Backlog");
+    lines.push(`Exported: ${new Date().toLocaleString()}`);
+    lines.push("");
+    if ((data.backlogNotes || "").trim()) {
+      lines.push("## Enhancement Pipeline");
+      lines.push((data.backlogNotes || "").trim());
+      lines.push("");
+    }
+    if ((data.backlogRationale || "").trim()) {
+      lines.push("## Strategic Parking Notes");
+      lines.push((data.backlogRationale || "").trim());
+      lines.push("");
+    }
+    lines.push("## Parked Sprints");
+    lines.push("| Week | Project | Process Phase | Dates | Status | Author | Sprint Goal | Key Outcomes |");
+    lines.push("|---:|---|---|---|---|---|---|---|");
+    (data.backlogSprints || []).forEach(sp => {
+      const esc = (s) => String(s ?? "").replaceAll("\n", "<br>").replaceAll("|", "\\|");
+      lines.push(`| ${sp.num} | ${esc(sp.project)} | ${esc(sp.processPhase)} | ${esc(sp.dates)} | ${esc(sp.status)} | ${esc(sp.author)} | ${esc(sp.goal)} | ${esc(sp.outcomes)} |`);
+    });
+    lines.push("");
+    return lines.join("\n");
+  }
+
+  function download(filename, text, mime = "text/plain;charset=utf-8") {
+    const blob = new Blob([text], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  render();
+  renderBacklog();
+
+  $("board_method").addEventListener("input", () => { data.meta.method = $("board_method").value; });
+  $("board_quickNotes").addEventListener("input", () => { data.meta.quickNotes = $("board_quickNotes").value; });
+  $("board_backlog").addEventListener("input", () => { data.backlogNotes = $("board_backlog").value; });
+
+  $("board_btnSave").addEventListener("click", () => {
+    data.meta.backlog = data.backlogNotes || $("board_backlog").value;
+    saveData(data);
+    render();
+  });
+
+  $("board_btnAddSprint").addEventListener("click", () => {
+    const nextNum = data.sprints.length > 0 ? Math.max(...data.sprints.map(s => s.num)) + 1 : 1;
+    const nextMonday = new Date();
+    nextMonday.setDate(nextMonday.getDate() + ((1 + 7 - nextMonday.getDay()) % 7 || 7));
+    const nextSunday = new Date(nextMonday);
+    nextSunday.setDate(nextSunday.getDate() + 6);
+    const formatDate = (d) => `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]} ${d.getDate()}`;
+    
+    data.sprints.push({
+      num: nextNum,
+      project: data.projects[0]?.name || "",
+      processPhase: data.projects[0]?.defaultPhase || PROCESS_PHASES[0],
+      dates: `${formatDate(nextMonday)} - ${formatDate(nextSunday)}, ${nextMonday.getFullYear()}`,
+      status: "Planned",
+      author: "Grace-Alice Evans",
+      goal: "",
+      outcomes: ""
+    });
+    render();
+    showToast("Sprint added");
+  });
+
+  $("board_btnReset").addEventListener("click", () => {
+    if (!confirm("Reset to default configuration? This will erase all custom data.")) return;
+    data = structuredClone(defaultData);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data, null, 2));
+    render();
+    renderBacklog();
+    showToast("Reset to defaults");
+  });
+
+  $("board_btnExportMd").addEventListener("click", () => {
+    download("auracelle_bach_mozart_board.md", toMarkdown());
+  });
+
+  $("board_btnExportJson").addEventListener("click", () => {
+    download("auracelle_bach_mozart_board.json", JSON.stringify(data, null, 2), "application/json;charset=utf-8");
+  });
+
+  // Backlog save
+  $("backlog_btnSave").addEventListener("click", () => {
+    data.backlogNotes = $("backlog_notes").value;
+    data.backlogRationale = $("backlog_rationale").value;
+    data.meta.backlog = data.backlogNotes;
+    saveData(data);
+    render();
+    renderBacklog();
+  });
+
+  $("backlog_btnExportJson").addEventListener("click", () => {
+    data.backlogNotes = $("backlog_notes").value;
+    data.backlogRationale = $("backlog_rationale").value;
+    download("auracelle_bach_mozart_backlog.json", JSON.stringify({
+      backlogNotes: data.backlogNotes || "",
+      backlogRationale: data.backlogRationale || "",
+      backlogSprints: data.backlogSprints || []
+    }, null, 2), "application/json;charset=utf-8");
+  });
+
+  $("backlog_btnExportMd").addEventListener("click", () => {
+    data.backlogNotes = $("backlog_notes").value;
+    data.backlogRationale = $("backlog_rationale").value;
+    download("auracelle_bach_mozart_backlog.md", backlogToMarkdown());
+  });
+
+  setInterval(() => {
+    const iso = data && data.meta ? data.meta.lastUpdatedISO : null;
+    if (iso) $("board_lastUpdated").value = new Date(iso).toLocaleString();
+  }, 1200);
+})();
+</script>
+
+<script>
+(() => {
+  // ========== DAILY LOG TAB ==========
+  const STORAGE_KEY = "auracelle_bach_mozart_daily_log_v1";
+  const $ = id => document.getElementById(id);
+
+  const checklistItems = [
+    "Bayesian Uncertainty Module",
+    "Convergence Prediction",
+    "MARL (Multi-Agent RL)",
+    "Nash Equilibrium Solver",
+    "Cognitive Architecture",
+    "Trust Dynamics Framework",
+    "Institutional Behavior Models",
+    "Moral Foundations Integration",
+    "Policy Database Updates",
+    "World Bank API",
+    "OECD AI Policy Observatory",
+    "Privacy International API",
+    "Data Ethics Guardrails",
+    "Mathematical Framework Docs",
+    "Strategic Positioning",
+    "Stakeholder Engagement"
+  ];
+
+  function showToast(msg) {
+    const t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 1400);
+  }
+
+  function todayISO() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  }
+
+  function loadEntries() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveEntries(entries) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries, null, 2));
+  }
+
+  function buildChecklist() {
+    const wrap = $("daily_checklist");
+    wrap.innerHTML = "";
+    checklistItems.forEach((item, idx) => {
+      const box = document.createElement("div");
+      box.className = "check";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.id = `daily_cb_${idx}`;
+      const lab = document.createElement("label");
+      lab.setAttribute("for", cb.id);
+      lab.textContent = item;
+      box.appendChild(cb);
+      box.appendChild(lab);
+      wrap.appendChild(box);
+    });
+  }
+
+  function collectForm() {
+    const touched = [];
+    checklistItems.forEach((item, idx) => {
+      const cb = document.getElementById(`daily_cb_${idx}`);
+      if (cb && cb.checked) touched.push(item);
+    });
+
+    const cryptoId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2);
+
+    return {
+      id: cryptoId,
+      date: $("daily_date").value,
+      sprint: $("daily_sprint").value,
+      focus: $("daily_focus").value,
+      touched,
+      decision: $("daily_decision").value.trim(),
+      deferred: $("daily_deferred").value.trim(),
+      risk: $("daily_risk").value.trim(),
+      status: $("daily_status").value,
+      author: ($("daily_author").value.trim() || "Grace-Alice Evans"),
+      createdISO: new Date().toISOString()
+    };
+  }
+
+  function validate(entry) {
+    if (!entry.date) return "Please select a date.";
+    return null;
+  }
+
+  function clearForm(keepDate = true) {
+    if (!keepDate) $("daily_date").value = todayISO();
+    checklistItems.forEach((_, idx) => {
+      const cb = document.getElementById(`daily_cb_${idx}`);
+      if (cb) cb.checked = false;
+    });
+    $("daily_decision").value = "";
+    $("daily_deferred").value = "";
+    $("daily_risk").value = "";
+    $("daily_status").value = "Progress on schedule";
+  }
+
+  function renderEntries(entries) {
+    const body = $("daily_entriesBody");
+    body.innerHTML = "";
+
+    const sorted = [...entries].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+    sorted.forEach(e => {
+      const tr = document.createElement("tr");
+
+      const tdDate = document.createElement("td");
+      tdDate.textContent = e.date || "";
+      tr.appendChild(tdDate);
+
+      const tdSprint = document.createElement("td");
+      tdSprint.textContent = e.sprint || "";
+      tr.appendChild(tdSprint);
+
+      const tdFocus = document.createElement("td");
+      tdFocus.textContent = e.focus || "";
+      tr.appendChild(tdFocus);
+
+      const tdNote = document.createElement("td");
+      const note = (e.decision || "—");
+      const touched = (e.touched && e.touched.length) ? `\nComponents: ${e.touched.join(", ")}` : "";
+      tdNote.textContent = note + touched;
+      tdNote.style.whiteSpace = "pre-wrap";
+      tr.appendChild(tdNote);
+
+      const tdStatus = document.createElement("td");
+      tdStatus.innerHTML = `<span class="pill">${e.status || ""}</span>`;
+      tr.appendChild(tdStatus);
+
+      const tdActions = document.createElement("td");
+      tdActions.className = "right";
+      const btnDel = document.createElement("button");
+      btnDel.textContent = "Delete";
+      btnDel.className = "danger";
+      btnDel.addEventListener("click", () => {
+        if (!confirm("Delete this entry?")) return;
+        const next = entries.filter(x => x.id !== e.id);
+        saveEntries(next);
+        renderEntries(next);
+        showToast("Entry deleted");
+      });
+      tdActions.appendChild(btnDel);
+      tr.appendChild(tdActions);
+
+      body.appendChild(tr);
+    });
+  }
+
+  function toMarkdown(entries) {
+    const lines = [];
+    lines.push("# Auracelle Bach & Mozart — Daily Development Log");
+    lines.push(`Exported: ${new Date().toLocaleString()}`);
+    lines.push("");
+    const sorted = [...entries].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+    for (const e of sorted) {
+      lines.push(`## ${e.date} — ${e.sprint} — ${e.focus}`);
+      lines.push(`**Status:** ${e.status}`);
+      lines.push(`**Author:** ${e.author}`);
+      lines.push("");
+      lines.push(`**Components Worked:** ${e.touched && e.touched.length ? e.touched.join(", ") : "—"}`);
+      lines.push("");
+      lines.push(`**Decision/Integration:**`);
+      lines.push(e.decision ? e.decision : "—");
+      lines.push("");
+      lines.push(`**Deferred/Parked:**`);
+      lines.push(e.deferred ? e.deferred : "—");
+      lines.push("");
+      lines.push(`**Technical Risk/Blocker:**`);
+      lines.push(e.risk ? e.risk : "—");
+      lines.push("");
+    }
+    return lines.join("\n");
+  }
+
+  function download(filename, text, mime = "text/plain;charset=utf-8") {
+    const blob = new Blob([text], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  buildChecklist();
+  $("daily_date").value = todayISO();
+  let entries = loadEntries();
+  renderEntries(entries);
+
+  $("daily_btnSaveEntry").addEventListener("click", () => {
+    const entry = collectForm();
+    const err = validate(entry);
+    if (err) { alert(err); return; }
+    entries = loadEntries();
+    entries.push(entry);
+    saveEntries(entries);
+    renderEntries(entries);
+    clearForm(true);
+    showToast("Entry saved ✅");
+  });
+
+  $("daily_btnExportJson").addEventListener("click", () => {
+    const e = loadEntries();
+    download("auracelle_bach_mozart_daily_log.json", JSON.stringify(e, null, 2), "application/json;charset=utf-8");
+  });
+
+  $("daily_btnExportMd").addEventListener("click", () => {
+    const e = loadEntries();
+    download("auracelle_bach_mozart_daily_log.md", toMarkdown(e));
+  });
+
+  $("daily_btnClear").addEventListener("click", () => {
+    if (!confirm("Delete ALL entries? This cannot be undone.")) return;
+    saveEntries([]);
+    entries = [];
+    renderEntries(entries);
+    showToast("Cleared");
+  });
+})();
+</script>
+
+</body>
+</html>
